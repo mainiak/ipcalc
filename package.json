@@ -1,0 +1,22 @@
+{
+  "name": "ipcalc",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mainiak/ipcalc.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mainiak/ipcalc/issues"
+  },
+  "homepage": "https://github.com/mainiak/ipcalc#readme",
+  "devDependencies": {
+    "jest": "^17.0.3"
+  }
+}
