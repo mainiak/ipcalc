@@ -1,3 +1,4 @@
+/*global test expect*/
 'use strict'
 
 const path = require('path')

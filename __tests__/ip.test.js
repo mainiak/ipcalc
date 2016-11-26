@@ -1,3 +1,4 @@
+/*global test expect*/
 'use strict'
 
 const path = require('path')
@@ -14,7 +15,6 @@ test('Valid /8', () => {
 test('Valid /16', () => {
   expect(ip.validate('255.255.0.0')).toBe('OK')
 })
-
 
 test('Valid /32', () => {
   expect(ip.validate('255.255.255.0')).toBe('OK')
@@ -34,4 +34,16 @@ test('Valid 100-199', () => {
 
 test('Valid <100', () => {
   expect(ip.validate('1.099.010.10')).toBe('OK')
+})
+
+test('Valid IP with /16', () => {
+  expect(ip.validate('192.168.0.0/16')).toBe('OK')
+})
+
+test('Valid IP with /8', () => {
+  expect(ip.validate('10.00.0.0/8')).toBe('OK')
+})
+
+test('Invalid netmask', () => {
+  expect(ip.validate('10.10.0.0/40')).toBe('Invalid netmask')
 })
