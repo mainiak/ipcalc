@@ -47,3 +47,22 @@ test('Valid IP with /8', () => {
 test('Invalid netmask', () => {
   expect(ip.validate('10.10.0.0/40')).toBe('Invalid netmask')
 })
+
+test('Private network 0', () => {
+  expect(ip.PRIVATE_NETWORKS.length).toBe(3)
+})
+
+test('Private network 1', () => {
+  let network = ip.PRIVATE_NETWORKS[0]
+  expect(ip.validate(network)).toBe('OK')
+})
+
+test('Private network 2', () => {
+  let network = ip.PRIVATE_NETWORKS[1]
+  expect(ip.validate(network)).toBe('OK')
+})
+
+test('Private network 3', () => {
+  let network = ip.PRIVATE_NETWORKS[2]
+  expect(ip.validate(network)).toBe('OK')
+})

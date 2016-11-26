@@ -4,6 +4,15 @@ const IPV4_DIGIT = /^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|0?[0-9]?[0-9])$/
 const IPV4_ADDR = /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/
 const NETMASK = /\/(3[0-2]|[0-2]?[0-9])$/
 
+// https://en.wikipedia.org/wiki/Private_network
+const PRIVATE_NETWORKS = [
+  '10.0.0.0/8',
+  '172.16.0.0/12',
+  '192.168.0.0/16'
+]
+
+exports.PRIVATE_NETWORKS = PRIVATE_NETWORKS
+
 exports.validate = function (ip_addr) {
   if (typeof ip_addr !== 'string') {
     return 'Not a string'
