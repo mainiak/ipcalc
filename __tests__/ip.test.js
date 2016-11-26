@@ -66,3 +66,15 @@ test('Private network 3', () => {
   let network = ip.PRIVATE_NETWORKS[2]
   expect(ip.validate(network)).toBe('OK')
 })
+
+test('IPV4LL - bellow range', () => {
+  expect(ip.isIPv4LL('169.254.0.1')).toBe(false)
+})
+
+test('IPV4LL - above range', () => {
+  expect(ip.isIPv4LL('169.254.3.7')).toBe(true)
+})
+
+test('IPV4LL - above range', () => {
+  expect(ip.isIPv4LL('169.254.255.1')).toBe(false)
+})
