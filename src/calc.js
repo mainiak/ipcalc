@@ -1,5 +1,6 @@
 'use strict'
 
+const BIN_RADIX = 2
 const DEC_RADIX = 10
 
 function divide (num) {
@@ -10,7 +11,7 @@ function divide (num) {
   }
 }
 
-exports.num2bin = function (num) {
+exports.dec2bin = function (num) {
   if ((typeof num === 'string') && (/^\d+$/.test(num))) {
     num = parseInt(num, DEC_RADIX)
   }
@@ -35,3 +36,10 @@ exports.num2bin = function (num) {
   return bin_num
 }
 
+exports.bin2dec = function (bin) {
+  if ((typeof bin === 'string') && (/^[01]+$/.test(bin))) {
+    return parseInt(bin, BIN_RADIX)
+  }
+
+  throw new Error('Not a binary number: ' + bin)
+}
