@@ -157,6 +157,23 @@ describe('IPv4 instance method', () => {
       expect(ipAddr.isInRange(ipAddrLow, ipAddrHigh)).toBe(false)
     })
   })
+
+  describe('isIPv4LL()', () => {
+    it('Bellow range', () => {
+      let ipAddr = new IPv4([10, 10, 10, 10])
+      expect(ipAddr.isIPv4LL()).toBe(false)
+    })
+
+    it('In range', () => {
+      let ipAddr = new IPv4([169, 254, 10, 10])
+      expect(ipAddr.isIPv4LL()).toBe(true)
+    })
+
+    it('Above range', () => {
+      let ipAddr = new IPv4([172, 10, 10, 10])
+      expect(ipAddr.isIPv4LL()).toBe(false)
+    })
+  })
 })
 
 describe('IPv4 static method', () => {

@@ -6,6 +6,13 @@ const IPV4_BYTES = 4
 const BYTE_BITS = 8
 const NETMASK_R = /\/(\d{1,2})/
 
+/*
+const IPV4LL_START = '169.254.1.0'
+const IPV4LL_END = '169.254.254.255'
+*/
+const IPV4LL_START = [169, 254, 1, 0]
+const IPV4LL_END = [169, 254, 254, 255]
+
 function pad (binNum, digits) {
   let i = 0
   let prefix = ''
@@ -126,6 +133,15 @@ class IPv4 {
   }
 
   isIPv4LL () {
+    if (IPv4.compare(this, new IPv4(IPV4LL_START)) === -1) {
+      return false
+    }
+
+    if (IPv4.compare(this, new IPv4(IPV4LL_END)) === 1) {
+      return false
+    }
+
+    return true
   }
 
   isInRange (ipAddr1, ipAddr2) {
