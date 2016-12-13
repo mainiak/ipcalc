@@ -4,14 +4,13 @@ const BIN_RADIX = 2
 const DEC_RADIX = 10
 const IPV4_BYTES = 4
 const BYTE_BITS = 8
-const NETMASK_R = /\/(\d{1,2})/
+const NETMASK_R = /\/(3[0-2]|[0-2]?[0-9])$/
 
-/*
+const IPV4_DIGIT = /^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|0?[0-9]?[0-9])$/
+const IPV4_ADDR = /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/
+
 const IPV4LL_START = '169.254.1.0'
 const IPV4LL_END = '169.254.254.255'
-*/
-const IPV4LL_START = [169, 254, 1, 0]
-const IPV4LL_END = [169, 254, 254, 255]
 
 function pad (binNum, digits) {
   let i = 0
@@ -133,11 +132,11 @@ class IPv4 {
   }
 
   isIPv4LL () {
-    if (IPv4.compare(this, new IPv4(IPV4LL_START)) === -1) {
+    if (IPv4.compare(this, IPv4.parse(IPV4LL_START)) === -1) {
       return false
     }
 
-    if (IPv4.compare(this, new IPv4(IPV4LL_END)) === 1) {
+    if (IPv4.compare(this, IPv4.parse(IPV4LL_END)) === 1) {
       return false
     }
 
@@ -280,6 +279,54 @@ class IPv4 {
 
       // compute
       broadcast: networkIP.binOr(invertedNetmask)
+    }
+  }
+
+  static parse (ipAddrStr) {
+    if (typeof ipAddrStr !== 'string') {
+      throw new Error(`Argument is not a string but ${typeof ipAddrStr}`)
+    }
+
+    let ipAddr = null
+    let netmask = null
+
+    if (ipAddrStr.indexOf('/') !== -1) {
+      if (NETMASK_R.test(ipAddrStr)) {
+        let ret = NETMASK_R.exec(ipAddrStr)
+        netmask = new IPv4(`/${ret[1]}`)
+
+        // remove netmask from ipAddrStr
+        ipAddrStr = ipAddrStr.replace(NETMASK_R, '')
+      } else {
+        throw new Error('Invalid netmask')
+      }
+    }
+
+    if (IPV4_ADDR.test(ipAddrStr) === false) {
+      throw new Error('Invalid format')
+    }
+
+    let i = 0
+    const max = 4
+    let octets = ipAddrStr.split('.')
+
+    for (i; i < max; i++) {
+      if (IPV4_DIGIT.test(octets[i]) === false) {
+        throw new Error(`Invalid ${(i + 1)}. octet`)
+      } else {
+        octets[i] = parseInt(octets[i], DEC_RADIX)
+      }
+    }
+
+    ipAddr = new IPv4(octets)
+
+    if (netmask === null) {
+      return ipAddr
+    }
+
+    return {
+      ipAddr,
+      netmask
     }
   }
 }

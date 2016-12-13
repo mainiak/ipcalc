@@ -287,4 +287,62 @@ describe('IPv4 static method', () => {
       expect(infoObj.broadcast.dotNotation()).toBe('172.31.255.255')
     })
   })
+
+  describe('IPv4.parse()', () => {
+    it('Not a string', () => {
+      expect(() => {
+        IPv4.parse(1234)
+      }).toThrowError('Argument is not a string but number')
+    })
+
+    it('Invalid format', () => {
+      expect(() => {
+        IPv4.parse('192.168.10')
+      }).toThrowError('Invalid format')
+    })
+
+    it('Invalid netmask', () => {
+      expect(() => {
+        IPv4.parse('192.168.10.20/123')
+      }).toThrowError('Invalid netmask')
+    })
+
+    it('Invalid 1st octet', () => {
+      expect(() => {
+        IPv4.parse('300.2.3.4')
+      }).toThrowError('Invalid 1. octet')
+    })
+
+    it('Invalid 2nd octet', () => {
+      expect(() => {
+        IPv4.parse('1.300.3.4')
+      }).toThrowError('Invalid 2. octet')
+    })
+
+    it('Invalid 3rd octet', () => {
+      expect(() => {
+        IPv4.parse('1.2.300.4')
+      }).toThrowError('Invalid 3. octet')
+    })
+
+    it('Invalid 4th octet', () => {
+      expect(() => {
+        IPv4.parse('1.2.3.300')
+      }).toThrowError('Invalid 4. octet')
+    })
+
+    it('1.2.3.4', () => {
+      let ipAddr = IPv4.parse('1.2.3.4')
+      expect(ipAddr instanceof IPv4).toBe(true)
+      expect(ipAddr.dotNotation()).toBe('1.2.3.4')
+    })
+
+    it('192.168.10.20/16', () => {
+      let network = IPv4.parse('192.168.10.20/16')
+      expect(network.ipAddr instanceof IPv4).toBe(true)
+      expect(network.netmask instanceof IPv4).toBe(true)
+      expect(network.ipAddr.dotNotation()).toBe('192.168.10.20')
+      expect(network.netmask.dotNotation()).toBe('255.255.0.0')
+    })
+  })
 })
