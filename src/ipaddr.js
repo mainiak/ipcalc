@@ -12,6 +12,13 @@ const IPV4_ADDR = /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/
 const IPV4LL_START = '169.254.1.0'
 const IPV4LL_END = '169.254.254.255'
 
+// https://en.wikipedia.org/wiki/Private_network
+const PRIVATE_NETWORKS = [
+  '10.0.0.0/8',
+  '172.16.0.0/12',
+  '192.168.0.0/16'
+]
+
 function pad (binNum, digits) {
   let i = 0
   let prefix = ''
@@ -128,7 +135,28 @@ class IPv4 {
   }
 
   isPrivateIP () {
-    // in range
+    let objA1 = IPv4.parse(PRIVATE_NETWORKS[0])
+    let objA2 = IPv4.parse(PRIVATE_NETWORKS[1])
+    let objA3 = IPv4.parse(PRIVATE_NETWORKS[2])
+
+    let objB1 = IPv4.info(objA1.ipAddr, objA1.netmask)
+    let objB2 = IPv4.info(objA2.ipAddr, objA2.netmask)
+    let objB3 = IPv4.info(objA3.ipAddr, objA3.netmask)
+
+    let localIP = false
+    if ((IPv4.compare(this, objB1.networkIP) !== -1) && (IPv4.compare(this, objB1.broadcast) !== 1)) {
+      localIP = true
+    }
+
+    if (!localIP && (IPv4.compare(this, objB2.networkIP) !== -1) && (IPv4.compare(this, objB2.broadcast) !== 1)) {
+      localIP = true
+    }
+
+    if (!localIP && (IPv4.compare(this, objB3.networkIP) !== -1) && (IPv4.compare(this, objB3.broadcast) !== 1)) {
+      localIP = true
+    }
+
+    return localIP
   }
 
   isIPv4LL () {

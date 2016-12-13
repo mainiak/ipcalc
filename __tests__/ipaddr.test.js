@@ -174,6 +174,28 @@ describe('IPv4 instance method', () => {
       expect(ipAddr.isIPv4LL()).toBe(false)
     })
   })
+
+  describe('isPrivateIP()', () => {
+    it('Is 10.10.10.10', () => {
+      let ipAddr = new IPv4([10, 10, 10, 10])
+      expect(ipAddr.isPrivateIP()).toBe(true)
+    })
+
+    it('Is 172.16.10.10', () => {
+      let ipAddr = new IPv4([172, 16, 10, 10])
+      expect(ipAddr.isPrivateIP()).toBe(true)
+    })
+
+    it('Is 192.168.10.10', () => {
+      let ipAddr = new IPv4([192, 168, 10, 10])
+      expect(ipAddr.isPrivateIP()).toBe(true)
+    })
+
+    it('Public 8.8.8.8', () => {
+      let ipAddr = new IPv4([8, 8, 8, 8])
+      expect(ipAddr.isPrivateIP()).toBe(false)
+    })
+  })
 })
 
 describe('IPv4 static method', () => {
