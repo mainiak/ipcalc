@@ -235,10 +235,8 @@ class IPv4 {
     // octect1 higher or lower?
     if (ipAddr1.data[0] !== ipAddr2.data[0]) {
       if (ipAddr1.data[0] > ipAddr2.data[0]) {
-        // console.log(`o1: 1 // ${ipAddr1.data[0]} > ${ipAddr2.data[0]}`) // XXX
         return 1
       } else {
-        // console.log(`o1: -1 // ${ipAddr1.data[0]} > ${ipAddr2.data[0]}`) // XXX
         return -1
       }
     }
@@ -246,10 +244,8 @@ class IPv4 {
     // octect2 higher or lower?
     if (ipAddr1.data[1] !== ipAddr2.data[1]) {
       if (ipAddr1.data[1] > ipAddr2.data[1]) {
-        // console.log(`o2: 1 // ${ipAddr1.data[1]} > ${ipAddr2.data[1]}`) // XXX
         return 1
       } else {
-        // console.log(`o2: -1 // ${ipAddr1.data[1]} > ${ipAddr2.data[1]}`) // XXX
         return -1
       }
     }
@@ -257,10 +253,8 @@ class IPv4 {
     // octect3 higher or lower?
     if (ipAddr1.data[2] !== ipAddr2.data[2]) {
       if (ipAddr1.data[2] > ipAddr2.data[2]) {
-        // console.log(`o3: 1 // ${ipAddr1.data[2]} > ${ipAddr2.data[2]}`) // XXX
         return 1
       } else {
-        // console.log(`o3: -1 // ${ipAddr1.data[2]} > ${ipAddr2.data[2]}`) // XXX
         return -1
       }
     }
@@ -268,15 +262,12 @@ class IPv4 {
     // octect4 higher or lower?
     if (ipAddr1.data[3] !== ipAddr2.data[3]) {
       if (ipAddr1.data[3] > ipAddr2.data[3]) {
-        // console.log(`o4: 1 // ${ipAddr1.data[3]} > ${ipAddr2.data[3]}`) // XXX
         return 1
       } else {
-        // console.log(`o4: -1 // ${ipAddr1.data[3]} > ${ipAddr2.data[3]}`) // XXX
         return -1
       }
     }
 
-    // console.log('same octets') // XXX
     return 0
   }
 
